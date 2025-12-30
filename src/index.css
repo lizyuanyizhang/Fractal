@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cyber-dark text-slate-100;
+    font-family: 'Inter', 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  }
+  
+  * {
+    @apply border-slate-700;
+  }
+}
+
+@layer utilities {
+  .text-glow-green {
+    @apply text-neon-green;
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  
+  .text-glow-purple {
+    @apply text-neon-purple;
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  
+  .border-glow-green {
+    @apply border-neon-green;
+    box-shadow: 0 0 10px currentColor;
+  }
+  
+  .border-glow-purple {
+    @apply border-neon-purple;
+    box-shadow: 0 0 10px currentColor;
+  }
+}
+
+/* 输入框光标闪烁动画 */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
