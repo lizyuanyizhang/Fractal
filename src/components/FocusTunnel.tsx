@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
+import Navigation from './Navigation'
 
 interface ConfettiParticle {
   id: number
@@ -16,9 +17,10 @@ interface FocusTunnelProps {
   taskTitle?: string
   onComplete?: () => void
   onExit?: () => void
+  onNavigate?: (view: 'void' | 'prism' | 'gravity' | 'tunnel') => void
 }
 
-const FocusTunnel = ({ taskTitle = 'Focus Mode', onComplete, onExit }: FocusTunnelProps) => {
+const FocusTunnel = ({ taskTitle = 'Focus Mode', onComplete, onExit, onNavigate }: FocusTunnelProps) => {
   const [elapsedTime, setElapsedTime] = useState(0)
   const [isRunning, setIsRunning] = useState(true)
   const [confetti, setConfetti] = useState<ConfettiParticle[]>([])
@@ -285,6 +287,13 @@ const FocusTunnel = ({ taskTitle = 'Focus Mode', onComplete, onExit }: FocusTunn
           </div>
         )}
       </AnimatePresence>
+      
+      {/* 导航栏（在非全屏模式下显示） */}
+      {onNavigate && (
+        <div className="absolute bottom-0 left-0 right-0 z-50">
+          <Navigation currentView="tunnel" onNavigate={onNavigate} />
+        </div>
+      )}
     </div>
   )
 }

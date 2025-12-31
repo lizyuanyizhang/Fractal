@@ -1,13 +1,17 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Circle, Box, Layers, GitBranch } from 'lucide-react'
+import Navigation from './Navigation'
 
 interface Particle {
   id: number
   text: string
 }
 
-const TheVoid = () => {
+interface TheVoidProps {
+  onNavigate?: (view: 'void' | 'prism' | 'gravity' | 'tunnel') => void
+}
+
+const TheVoid = ({ onNavigate }: TheVoidProps) => {
   const [inputValue, setInputValue] = useState('')
   const [particles, setParticles] = useState<Particle[]>([])
   const [showCursor, setShowCursor] = useState(true)
@@ -129,42 +133,12 @@ const TheVoid = () => {
         ))}
       </AnimatePresence>
 
-      {/* 底部导航栏 */}
-      <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm border-t border-slate-800/50">
-        <div className="container mx-auto px-8 py-4">
-          <div className="flex items-center justify-center gap-12">
-            <NavItem icon={Circle} label="Void" active />
-            <NavItem icon={Box} label="Prism" />
-            <NavItem icon={Layers} label="Gravity" />
-            <NavItem icon={GitBranch} label="Tunnel" />
-          </div>
-        </div>
-      </div>
+      {/* 导航栏 */}
+      {onNavigate && <Navigation currentView="void" onNavigate={onNavigate} />}
 
       {/* 底部混沌池效果 */}
       <div className="absolute bottom-16 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
     </div>
-  )
-}
-
-interface NavItemProps {
-  icon: React.ComponentType<any>
-  label: string
-  active?: boolean
-}
-
-const NavItem = ({ icon: Icon, label, active = false }: NavItemProps) => {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      className={`flex flex-col items-center gap-2 transition-colors ${
-        active ? 'text-neon-green' : 'text-slate-500 hover:text-slate-300'
-      }`}
-    >
-      <Icon size={24} className={active ? 'text-glow-green' : ''} />
-      <span className="text-xs font-mono">{label}</span>
-    </motion.button>
   )
 }
 

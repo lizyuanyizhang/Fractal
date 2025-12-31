@@ -14,6 +14,7 @@ import ReactFlow, {
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { motion } from 'framer-motion'
+import Navigation from './Navigation'
 
 // 自定义神经元节点组件
 const NeuronNode = ({ data, selected }: { data: { label: string }; selected?: boolean }) => {
@@ -106,7 +107,11 @@ const generateSubNodes = (parentId: string, parentPosition: { x: number; y: numb
   })
 }
 
-const ThePrism = () => {
+interface ThePrismProps {
+  onNavigate?: (view: 'void' | 'prism' | 'gravity' | 'tunnel') => void
+}
+
+const ThePrism = ({ onNavigate }: ThePrismProps) => {
   // 计算画布中心位置（假设视口大小，实际会在 fitView 时调整）
   const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 - 100 : 0
   const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 - 50 : 0
@@ -234,6 +239,9 @@ const ThePrism = () => {
           opacity: 0;
         }
       `}</style>
+      
+      {/* 导航栏 */}
+      {onNavigate && <Navigation currentView="prism" onNavigate={onNavigate} />}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { Sparkles } from 'lucide-react'
+import Navigation from './Navigation'
 
 // 任务类别颜色映射
 const categoryColors: Record<string, string> = {
@@ -201,7 +202,11 @@ const TaskBubble = ({
   )
 }
 
-const InterestGravity = () => {
+interface InterestGravityProps {
+  onNavigate?: (view: 'void' | 'prism' | 'gravity' | 'tunnel') => void
+}
+
+const InterestGravity = ({ onNavigate }: InterestGravityProps) => {
   const [tasks, setTasks] = useState<Task[]>(initialTasks)
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
@@ -360,6 +365,9 @@ const InterestGravity = () => {
           ))}
         </div>
       </div>
+      
+      {/* 导航栏 */}
+      {onNavigate && <Navigation currentView="gravity" onNavigate={onNavigate} />}
     </div>
   )
 }
