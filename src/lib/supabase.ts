@@ -15,10 +15,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // 创建 Supabase 客户端
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-  },
-})
+// 即使环境变量为空，也创建客户端（避免应用崩溃）
+// 实际使用时会在服务层检查配置
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key',
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  }
+)
 
