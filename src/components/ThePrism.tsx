@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import ReactFlow, {
   Node,
   Edge,
@@ -112,16 +112,12 @@ interface ThePrismProps {
 }
 
 const ThePrism = ({ onNavigate }: ThePrismProps) => {
-  // 计算画布中心位置（假设视口大小，实际会在 fitView 时调整）
-  const centerX = typeof window !== 'undefined' ? window.innerWidth / 2 - 100 : 0
-  const centerY = typeof window !== 'undefined' ? window.innerHeight / 2 - 50 : 0
-
-  // 初始节点：画布中央的主节点
+  // 初始节点：画布中央的主节点（使用相对位置，fitView 会自动居中）
   const initialNodes: Node[] = [
     {
       id: 'main',
       type: 'neuron',
-      position: { x: centerX, y: centerY },
+      position: { x: 0, y: 0 },
       data: { label: '学习 Python' },
     },
   ]
@@ -131,6 +127,11 @@ const ThePrism = ({ onNavigate }: ThePrismProps) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set())
+
+  // 调试：检查组件是否加载
+  useEffect(() => {
+    console.log('✅ ThePrism 组件已加载')
+  }, [])
 
   // 处理节点点击
   const onNodeClick = useCallback(

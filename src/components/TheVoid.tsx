@@ -137,7 +137,7 @@ const TheVoid = ({ onNavigate }: TheVoidProps) => {
       {onNavigate && <Navigation currentView="void" onNavigate={onNavigate} />}
 
       {/* 底部混沌池效果 */}
-      <div className="absolute bottom-16 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+      <div className="absolute bottom-16 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-0" />
     </div>
   )
 }

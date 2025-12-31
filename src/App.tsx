@@ -11,8 +11,12 @@ function App() {
   const [currentView, setCurrentView] = useState<View>('void')
 
   const handleViewChange = (view: View) => {
+    console.log('🟢 App: 切换视图', view)
     setCurrentView(view)
+    console.log('🟢 App: 视图已更新为', view)
   }
+
+  console.log('🟡 App 渲染，当前视图:', currentView)
 
   return (
     <AnimatePresence mode="wait">

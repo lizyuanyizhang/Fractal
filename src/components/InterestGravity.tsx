@@ -227,6 +227,11 @@ const InterestGravity = ({ onNavigate }: InterestGravityProps) => {
     return () => window.removeEventListener('resize', updateSize)
   }, [])
 
+  // 调试：检查组件是否加载
+  useEffect(() => {
+    console.log('✅ InterestGravity 组件已加载')
+  }, [])
+
   // 更新任务位置
   const handlePositionChange = (id: string, x: number, y: number) => {
     setTasks((prevTasks) =>
@@ -318,7 +323,7 @@ const InterestGravity = ({ onNavigate }: InterestGravityProps) => {
 
         {/* 任务气泡 */}
         <div ref={containerRef} className="relative w-full h-full">
-          {containerSize.width > 0 && containerSize.height > 0 &&
+          {containerSize.width > 0 && containerSize.height > 0 ? (
             tasks.map((task) => (
               <TaskBubble
                 key={task.id}
@@ -328,7 +333,12 @@ const InterestGravity = ({ onNavigate }: InterestGravityProps) => {
                 onPositionChange={handlePositionChange}
                 onDragEnd={handleDragEnd}
               />
-            ))}
+            ))
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-slate-500 font-mono text-sm">
+              加载中...
+            </div>
+          )}
         </div>
       </div>
 

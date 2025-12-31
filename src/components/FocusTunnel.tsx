@@ -28,6 +28,11 @@ const FocusTunnel = ({ taskTitle = 'Focus Mode', onComplete, onExit, onNavigate 
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const confettiIdRef = useRef(0)
 
+  // 调试：检查组件是否加载
+  useEffect(() => {
+    console.log('✅ FocusTunnel 组件已加载')
+  }, [])
+
   // 计时器
   useEffect(() => {
     if (isRunning) {
@@ -78,18 +83,22 @@ const FocusTunnel = ({ taskTitle = 'Focus Mode', onComplete, onExit, onNavigate 
     setConfetti(particles)
     setShowConfetti(true)
 
-    // 2.5秒后清理并返回
-    setTimeout(() => {
-      setShowConfetti(false)
+      // 2.5秒后清理并返回
       setTimeout(() => {
-        if (onComplete) {
-          onComplete()
-        }
-        if (onExit) {
-          onExit()
-        }
-      }, 500)
-    }, 2500)
+        setShowConfetti(false)
+        setTimeout(() => {
+          if (onComplete) {
+            onComplete()
+          }
+          if (onExit) {
+            onExit()
+          }
+          // 如果没有 onExit，使用 onNavigate 返回 Void
+          if (!onExit && onNavigate) {
+            onNavigate('void')
+          }
+        }, 500)
+      }, 2500)
   }
 
   // 处理完成按钮点击
